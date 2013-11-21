@@ -12,7 +12,11 @@ namespace specalg_sorts
         static void Main(string[] args)
         {
             RunOnAll(TestAlgorithm);
+            PrintRunSpeeds();
+        }
 
+        static void PrintRunSpeeds()
+        {
             const int arrayCount = 1000;
             const int max = int.MaxValue;
             const int runCount = 1000;
@@ -37,6 +41,7 @@ namespace specalg_sorts
         static void RunOnAll(AlgorithmDelegate del)
         {
             del(new SelectionSort());
+            del(new InsertionSort());
             del(new QuickSort());
         }
 
