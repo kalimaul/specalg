@@ -12,7 +12,72 @@ namespace specalg_sorts
         static void Main(string[] args)
         {
             RunOnAll(TestAlgorithm);
-            PrintRunSpeeds();
+            //PrintRunSpeeds();
+            SmallArrayCountRace();
+        }
+
+        static void SmallArrayCountRace()
+        {
+            const int runCount = 30000;
+            const int qsWinRequirement = 20;
+
+            int arrayCount = 1;
+
+            string qsname = typeof(QuickSort).Name;
+            int quickSortWins = 0;
+
+            while (arrayCount < 1000)
+            {
+                int[] numbers = new int[arrayCount];
+                Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
+
+                Dictionary<SortingAlgorithm.Result, string> results = new Dictionary<SortingAlgorithm.Result, string>();
+
+                RunOnAll(delegate(SortingAlgorithm sort)
+                {
+                    results.Add(sort.SetArray(numbers).Run(runCount), sort.GetType().Name);
+                });
+
+                List<SortingAlgorithm.Result> resList = new List<SortingAlgorithm.Result>(results.Keys);
+                resList.Sort((t1, t2) => (t1.accessCount.CompareTo(t2.accessCount)));
+                string accessCountWinner = results[resList[0]];
+
+                resList.Sort((t1, t2) => (t1.innerIterationCount.CompareTo(t2.innerIterationCount)));
+                string iterationWinner = results[resList[0]];
+
+                resList.Sort((t1, t2) => (t1.elapsedTime.CompareTo(t2.elapsedTime)));
+                string elapsedWinner = results[resList[0]];
+
+                if (elapsedWinner == qsname)
+                {
+                    ++quickSortWins;
+                }
+                else
+                {
+                    quickSortWins = 0;
+                }
+
+                Console.WriteLine("S: " + arrayCount + ", Acc: " + accessCountWinner + ", It: " + iterationWinner + ", El: " + elapsedWinner);
+
+                if (qsWinRequirement <= quickSortWins)
+                {
+                    break;
+                }
+
+                ++arrayCount;
+            }
+            /*
+            for (int arrayCount = 1; arrayCount < MaxCount; ++arrayCount)
+            {
+                int[] numbers = new int[arrayCount];
+                Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
+                Console.WriteLine("size: " + arrayCount);
+                RunOnAll(delegate(SortingAlgorithm sort)
+                {
+                    PrintRunningSpeed(sort, numbers, runCount);
+                    Console.WriteLine();
+                });
+            }*/
         }
 
         static void PrintRunSpeeds()
@@ -22,11 +87,7 @@ namespace specalg_sorts
             const int runCount = 1000;
 
             int[] numbers = new int[arrayCount];
-            System.Random rand = new Random();
-            for (int i = 0; i < numbers.Length; ++i)
-            {
-                numbers[i] = rand.Next() % max;
-            }
+            Helpers.FillArrayWithRandomData(numbers, max);
 
             Console.WriteLine(arrayCount + " elements, Max Value: " + max + ", Runs: " + runCount);
 
@@ -42,6 +103,7 @@ namespace specalg_sorts
         {
             del(new SelectionSort());
             del(new InsertionSort());
+            del(new RandomizedQuickSort());
             del(new QuickSort());
         }
 
@@ -50,7 +112,7 @@ namespace specalg_sorts
             sort.SetArray(numbers);
             SortingAlgorithm.Result res = sort.Run(runCount);
             res.Divide(numbers.Length);
-            Console.Write(sort + ": ");
+            Console.Write(sort.GetType().Name + ": ");
             Console.WriteLine(res);
         }
 
@@ -58,11 +120,7 @@ namespace specalg_sorts
         {
             const int count = 10000;
             int[] numbers = new int[count];
-            System.Random rand = new Random();
-            for (int i = 0; i < numbers.Length; ++i)
-            {
-                numbers[i] = rand.Next();
-            }
+            Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
 
             sort.SetArray(numbers);
             sort.RunOnce();

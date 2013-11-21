@@ -25,5 +25,14 @@ namespace specalg_sorts
             array[idx2] = tmp;
             res.accessCount += 4;
         }
+
+        public static void FillArrayWithRandomData(int[] array, int maxVal)
+        {
+            System.Random rand = new Random();
+            for (int i = 0; i < array.Length; ++i)
+            {
+                array[i] = rand.Next() % maxVal;
+            }
+        }
     }
 }

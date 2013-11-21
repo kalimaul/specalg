@@ -16,9 +16,10 @@ namespace specalg_sorts
             return results;
         }
 
-        public void SetArray(int[] array)
+        public SortingAlgorithm SetArray(int[] array)
         {
             originalArray = array;
+            return this;
         }
 
         public class Result
@@ -36,9 +37,9 @@ namespace specalg_sorts
 
             public override string ToString()
             {
-                return "Access Count: " + (long)accessCount +
-                    ", Inner Iteration Count: " + (long)innerIterationCount +
-                    ", Elapsed Time (ms): " + (long)elapsedTime;
+                return "Access: " + (long)accessCount +
+                    ", Inner Iteration: " + (long)innerIterationCount +
+                    ", Elapsed (ms): " + (long)elapsedTime;
             }
         }
 
