@@ -49,7 +49,7 @@ namespace specalg_sorts
     /// <summary>
     ///  Randomized QuickSort (random pivot selection)
     /// </summary>
-    class RandomizedQuickSort : SortingAlgorithm
+    class RandomQSort : SortingAlgorithm
     {
         Random random = new Random();
 

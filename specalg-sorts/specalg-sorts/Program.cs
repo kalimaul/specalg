@@ -18,12 +18,13 @@ namespace specalg_sorts
 
         static void SmallArrayCountRace()
         {
-            const int runCount = 30000;
+            const int runCount = 10000;
             const int qsWinRequirement = 20;
 
             int arrayCount = 1;
 
             string qsname = typeof(QuickSort).Name;
+            string rqsname = typeof(RandomQSort).Name;
             int quickSortWins = 0;
 
             while (arrayCount < 1000)
@@ -48,7 +49,7 @@ namespace specalg_sorts
                 resList.Sort((t1, t2) => (t1.elapsedTime.CompareTo(t2.elapsedTime)));
                 string elapsedWinner = results[resList[0]];
 
-                if (elapsedWinner == qsname)
+                if (elapsedWinner == qsname || elapsedWinner == rqsname)
                 {
                     ++quickSortWins;
                 }
@@ -57,7 +58,10 @@ namespace specalg_sorts
                     quickSortWins = 0;
                 }
 
-                Console.WriteLine("S: " + arrayCount + ", Acc: " + accessCountWinner + ", It: " + iterationWinner + ", El: " + elapsedWinner);
+                Console.WriteLine("S: " + arrayCount.ToString().PadLeft(2)
+                    + " Acc: " + accessCountWinner.PadRight(15) + " It: " +
+                    iterationWinner.PadRight(15) + " El: " +
+                    elapsedWinner.PadRight(15));
 
                 if (qsWinRequirement <= quickSortWins)
                 {
@@ -91,7 +95,7 @@ namespace specalg_sorts
         {
             del(new SelectionSort());
             del(new InsertionSort());
-            del(new RandomizedQuickSort());
+            del(new RandomQSort());
             del(new QuickSort());
         }
 
