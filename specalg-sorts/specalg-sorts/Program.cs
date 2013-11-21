@@ -95,7 +95,7 @@ namespace specalg_sorts
         {
             del(new SelectionSort());
             del(new InsertionSort());
-            del(new RandomQSort());
+            //del(new RandomQSort());
             del(new QuickSort());
         }
 

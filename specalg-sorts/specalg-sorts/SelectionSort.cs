@@ -19,7 +19,6 @@ namespace specalg_sorts
                     }
                 }
 
-                res.accessCount += 4;
                 Helpers.Swap(array, pivot, maxPos, res);
             }
         }
