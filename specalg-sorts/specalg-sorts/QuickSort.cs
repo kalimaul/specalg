@@ -31,7 +31,7 @@ namespace specalg_sorts
         int Partition(int[] array, int from, int to, int pivot, Result res)
         {
             int pivotVal = array[pivot];
-            Swap(array, pivot, to, res);
+            Helpers.Swap(array, pivot, to, res);
             pivot = from;
 
             for (int i = from; i < to; ++i)
@@ -40,12 +40,12 @@ namespace specalg_sorts
 
                 if (array[i] <= pivotVal)
                 {
-                    Swap(array, i, pivot, res);
+                    Helpers.Swap(array, i, pivot, res);
                     ++pivot;
                 }
             }
 
-            Swap(array, pivot, to, res);
+            Helpers.Swap(array, pivot, to, res);
             return pivot;
         }
     }

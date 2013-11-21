@@ -17,5 +17,13 @@ namespace specalg_sorts
 
             Console.WriteLine();
         }
+
+        public static void Swap(int[] array, int idx1, int idx2, SortingAlgorithm.Result res)
+        {
+            int tmp = array[idx1];
+            array[idx1] = array[idx2];
+            array[idx2] = tmp;
+            res.accessCount += 4;
+        }
     }
 }
