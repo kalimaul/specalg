@@ -20,9 +20,7 @@ namespace specalg_sorts
                 }
 
                 res.accessCount += 4;
-                int tmp = array[pivot];
-                array[pivot] = array[maxPos];
-                array[maxPos] = tmp;
+                Swap(array, pivot, maxPos, res);
             }
         }
     }

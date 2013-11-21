@@ -77,5 +77,13 @@ namespace specalg_sorts
 
             return avg;
         }
+
+        protected void Swap(int[] array, int idx1, int idx2, Result res)
+        {
+            int tmp = array[idx1];
+            array[idx1] = array[idx2];
+            array[idx2] = tmp;
+            res.accessCount += 4;
+        }
     }
 }
