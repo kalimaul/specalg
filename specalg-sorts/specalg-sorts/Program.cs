@@ -66,18 +66,6 @@ namespace specalg_sorts
 
                 ++arrayCount;
             }
-            /*
-            for (int arrayCount = 1; arrayCount < MaxCount; ++arrayCount)
-            {
-                int[] numbers = new int[arrayCount];
-                Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
-                Console.WriteLine("size: " + arrayCount);
-                RunOnAll(delegate(SortingAlgorithm sort)
-                {
-                    PrintRunningSpeed(sort, numbers, runCount);
-                    Console.WriteLine();
-                });
-            }*/
         }
 
         static void PrintRunSpeeds()
