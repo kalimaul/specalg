@@ -11,7 +11,7 @@ namespace specalg_sorts
     {
         static void Main(string[] args)
         {
-            TestAlgorithms();
+            RunOnAll(TestAlgorithm);
 
             const int arrayCount = 1000;
             const int max = int.MaxValue;
@@ -24,26 +24,29 @@ namespace specalg_sorts
                 numbers[i] = rand.Next() % max;
             }
 
-            //Helpers.PrintArray(numbers);
+            Console.WriteLine(arrayCount + " elements, Max Value: " + max + ", Runs: " + runCount);
 
-            SortingAlgorithm sort = new QuickSort();
-            sort.SetArray(numbers);
-            SortingAlgorithm.Result res = sort.Run(runCount);
-            res.Divide(arrayCount);
-
-            /*
+            RunOnAll(delegate(SortingAlgorithm sort)
             {
-                int[] result = sort.GetResults()[0];
-                Helpers.PrintArray(result);
-            }*/
-
-            Console.WriteLine(res);
+                PrintRunningSpeed(sort, numbers, runCount);
+            });
         }
 
-        static void TestAlgorithms()
+        delegate void AlgorithmDelegate(SortingAlgorithm algo);
+
+        static void RunOnAll(AlgorithmDelegate del)
         {
-            TestAlgorithm(new SelectionSort());
-            TestAlgorithm(new QuickSort());
+            del(new SelectionSort());
+            del(new QuickSort());
+        }
+
+        static void PrintRunningSpeed(SortingAlgorithm sort, int[] numbers, int runCount)
+        {
+            sort.SetArray(numbers);
+            SortingAlgorithm.Result res = sort.Run(runCount);
+            res.Divide(numbers.Length);
+            Console.Write(sort + ": ");
+            Console.WriteLine(res);
         }
 
         static void TestAlgorithm(SortingAlgorithm sort)
