@@ -12,8 +12,9 @@ namespace specalg_sorts
         static void Main(string[] args)
         {
             RunOnAll(TestAlgorithm);
+            new MainForm().ShowDialog();
             //PrintRunSpeeds();
-            SmallArrayCountRace();
+            //SmallArrayCountRace();
         }
 
         static void SmallArrayCountRace()
@@ -93,13 +94,13 @@ namespace specalg_sorts
             });
         }
 
-        delegate void AlgorithmDelegate(SortingAlgorithm algo);
+        public delegate void AlgorithmDelegate(SortingAlgorithm algo);
 
-        static void RunOnAll(AlgorithmDelegate del)
+        public static void RunOnAll(AlgorithmDelegate del)
         {
             del(new SelectionSort());
             del(new InsertionSort());
-            //del(new RandomQSort());
+            del(new RandomQSort());
             del(new QuickSort());
         }
 
