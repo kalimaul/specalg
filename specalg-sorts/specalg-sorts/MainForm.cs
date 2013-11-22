@@ -12,13 +12,42 @@ namespace specalg_sorts
 {
     public partial class MainForm : Form
     {
+        List<SortingAlgorithm> sorts;
+
         public MainForm()
         {
             InitializeComponent();
+            UpdateStuff();
         }
 
         void UpdateStuff()
         {
+            sorts = new List<SortingAlgorithm>(5);
+            if (insertionCheckBox.Checked)
+            {
+                sorts.Add(new InsertionSort());
+            }
+
+            if (selectionCheckBox.Checked)
+            {
+                sorts.Add(new SelectionSort());
+            }
+
+            if (quicksortCheckBox.Checked)
+            {
+                sorts.Add(new QuickSort());
+            }
+
+            if (threewayQSCheckbox.Checked)
+            {
+                sorts.Add(new ThreeWayQuickSort());
+            }
+
+            if (optimizedQSCheckbox.Checked)
+            {
+                sorts.Add(new OptimizedQuickSort((int)optimizedQSSwitchAt.Value));
+            }
+
             Refresh();
         }
 
@@ -36,15 +65,15 @@ namespace specalg_sorts
             Helpers.FillArrayWithRandomData(array, (int)maxVal.Value);
 
             int runs = (int)sortRuns.Value;
-
-            Program.RunOnAll(delegate (SortingAlgorithm sort) {
+            foreach (SortingAlgorithm sort in sorts)
+            {
                 statusLabel.Text += "Sorting with " + sort.GetType().Name + "\n";
-                UpdateStuff();
+                Refresh();
                 SortingAlgorithm.Result res = sort.SetArray(array).Run(runs);
                 res.Divide(array.Length);
                 statusLabel.Text += sort.GetType().Name + ": " + res.ToString() + "\n";
-                UpdateStuff();
-            });
+                Refresh();
+            }
         }
     }
 }

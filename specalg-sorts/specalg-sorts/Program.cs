@@ -12,8 +12,8 @@ namespace specalg_sorts
         static void Main(string[] args)
         {
             RunOnAll(TestAlgorithm);
-            //new MainForm().ShowDialog();
-            PrintRunSpeeds();
+            new MainForm().ShowDialog();
+            // PrintRunSpeeds();
             //SmallArrayCountRace();
         }
 

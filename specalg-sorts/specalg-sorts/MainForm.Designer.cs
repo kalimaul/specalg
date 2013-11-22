@@ -36,9 +36,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.sortRuns = new System.Windows.Forms.NumericUpDown();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.selectionCheckBox = new System.Windows.Forms.CheckBox();
+            this.insertionCheckBox = new System.Windows.Forms.CheckBox();
+            this.quicksortCheckBox = new System.Windows.Forms.CheckBox();
+            this.threewayQSCheckbox = new System.Windows.Forms.CheckBox();
+            this.optimizedQSCheckbox = new System.Windows.Forms.CheckBox();
+            this.optimizedQSSwitchAt = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.elemCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sortRuns)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optimizedQSSwitchAt)).BeginInit();
             this.SuspendLayout();
             // 
             // elemCount
@@ -100,7 +108,7 @@
             // 
             // sortButton
             // 
-            this.sortButton.Location = new System.Drawing.Point(353, 101);
+            this.sortButton.Location = new System.Drawing.Point(527, 51);
             this.sortButton.Name = "sortButton";
             this.sortButton.Size = new System.Drawing.Size(75, 23);
             this.sortButton.TabIndex = 9;
@@ -111,7 +119,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 101);
+            this.label3.Location = new System.Drawing.Point(350, 9);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(105, 17);
             this.label3.TabIndex = 10;
@@ -119,7 +127,7 @@
             // 
             // sortRuns
             // 
-            this.sortRuns.Location = new System.Drawing.Point(187, 99);
+            this.sortRuns.Location = new System.Drawing.Point(353, 51);
             this.sortRuns.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -148,11 +156,104 @@
             this.statusLabel.TabIndex = 12;
             this.statusLabel.Text = "status";
             // 
+            // selectionCheckBox
+            // 
+            this.selectionCheckBox.AutoSize = true;
+            this.selectionCheckBox.Checked = true;
+            this.selectionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.selectionCheckBox.Location = new System.Drawing.Point(30, 113);
+            this.selectionCheckBox.Name = "selectionCheckBox";
+            this.selectionCheckBox.Size = new System.Drawing.Size(118, 21);
+            this.selectionCheckBox.TabIndex = 13;
+            this.selectionCheckBox.Text = "Selection Sort";
+            this.selectionCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // insertionCheckBox
+            // 
+            this.insertionCheckBox.AutoSize = true;
+            this.insertionCheckBox.Checked = true;
+            this.insertionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.insertionCheckBox.Location = new System.Drawing.Point(187, 113);
+            this.insertionCheckBox.Name = "insertionCheckBox";
+            this.insertionCheckBox.Size = new System.Drawing.Size(114, 21);
+            this.insertionCheckBox.TabIndex = 14;
+            this.insertionCheckBox.Text = "Insertion Sort";
+            this.insertionCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // quicksortCheckBox
+            // 
+            this.quicksortCheckBox.AutoSize = true;
+            this.quicksortCheckBox.Checked = true;
+            this.quicksortCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.quicksortCheckBox.Location = new System.Drawing.Point(353, 113);
+            this.quicksortCheckBox.Name = "quicksortCheckBox";
+            this.quicksortCheckBox.Size = new System.Drawing.Size(90, 21);
+            this.quicksortCheckBox.TabIndex = 15;
+            this.quicksortCheckBox.Text = "Quicksort";
+            this.quicksortCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // threewayQSCheckbox
+            // 
+            this.threewayQSCheckbox.AutoSize = true;
+            this.threewayQSCheckbox.Checked = true;
+            this.threewayQSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.threewayQSCheckbox.Location = new System.Drawing.Point(471, 113);
+            this.threewayQSCheckbox.Name = "threewayQSCheckbox";
+            this.threewayQSCheckbox.Size = new System.Drawing.Size(131, 21);
+            this.threewayQSCheckbox.TabIndex = 16;
+            this.threewayQSCheckbox.Text = "3-way Quicksort";
+            this.threewayQSCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // optimizedQSCheckbox
+            // 
+            this.optimizedQSCheckbox.AutoSize = true;
+            this.optimizedQSCheckbox.Checked = true;
+            this.optimizedQSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optimizedQSCheckbox.Location = new System.Drawing.Point(645, 113);
+            this.optimizedQSCheckbox.Name = "optimizedQSCheckbox";
+            this.optimizedQSCheckbox.Size = new System.Drawing.Size(157, 21);
+            this.optimizedQSCheckbox.TabIndex = 17;
+            this.optimizedQSCheckbox.Text = "Optimized Quicksort";
+            this.optimizedQSCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // optimizedQSSwitchAt
+            // 
+            this.optimizedQSSwitchAt.Location = new System.Drawing.Point(768, 145);
+            this.optimizedQSSwitchAt.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.optimizedQSSwitchAt.Name = "optimizedQSSwitchAt";
+            this.optimizedQSSwitchAt.Size = new System.Drawing.Size(51, 22);
+            this.optimizedQSSwitchAt.TabIndex = 18;
+            this.optimizedQSSwitchAt.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(624, 147);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 17);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "Switch to insertion at";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(814, 399);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.optimizedQSSwitchAt);
+            this.Controls.Add(this.optimizedQSCheckbox);
+            this.Controls.Add(this.threewayQSCheckbox);
+            this.Controls.Add(this.quicksortCheckBox);
+            this.Controls.Add(this.insertionCheckBox);
+            this.Controls.Add(this.selectionCheckBox);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.sortRuns);
             this.Controls.Add(this.label3);
@@ -167,6 +268,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.elemCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sortRuns)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optimizedQSSwitchAt)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,5 +284,12 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown sortRuns;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.CheckBox selectionCheckBox;
+        private System.Windows.Forms.CheckBox insertionCheckBox;
+        private System.Windows.Forms.CheckBox quicksortCheckBox;
+        private System.Windows.Forms.CheckBox threewayQSCheckbox;
+        private System.Windows.Forms.CheckBox optimizedQSCheckbox;
+        private System.Windows.Forms.NumericUpDown optimizedQSSwitchAt;
+        private System.Windows.Forms.Label label4;
     }
 }
