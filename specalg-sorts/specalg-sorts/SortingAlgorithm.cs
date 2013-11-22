@@ -26,12 +26,14 @@ namespace specalg_sorts
         {
             public double accessCount;
             public double innerIterationCount;
+            public double arrayWriteCount;
             public double elapsedTime;
 
             public void Divide(double div)
             {
                 accessCount = accessCount / div;
                 innerIterationCount = innerIterationCount / div;
+                arrayWriteCount = arrayWriteCount / div;
                 // elapsedTime = elapsedTime / div;
             }
 
@@ -39,6 +41,7 @@ namespace specalg_sorts
             {
                 return "Access: " + (long)accessCount +
                     ", Inner Iteration: " + (long)innerIterationCount +
+                    ", Array Moves: " + (long)arrayWriteCount +
                     ", Elapsed (ms): " + (long)elapsedTime;
             }
         }

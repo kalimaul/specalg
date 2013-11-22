@@ -49,6 +49,9 @@ namespace specalg_sorts
                 resList.Sort((t1, t2) => (t1.elapsedTime.CompareTo(t2.elapsedTime)));
                 string elapsedWinner = results[resList[0]];
 
+                resList.Sort((t1, t2) => (t1.arrayWriteCount.CompareTo(t2.arrayWriteCount)));
+                string writeWinner = results[resList[0]];
+
                 if (elapsedWinner == qsname || elapsedWinner == rqsname)
                 {
                     ++quickSortWins;
@@ -59,9 +62,10 @@ namespace specalg_sorts
                 }
 
                 Console.WriteLine("S: " + arrayCount.ToString().PadLeft(2)
-                    + " Acc: " + accessCountWinner.PadRight(15) + " It: " +
-                    iterationWinner.PadRight(15) + " El: " +
-                    elapsedWinner.PadRight(15));
+                    + " Acc: " + accessCountWinner.PadRight(13) +
+                    " It: " + iterationWinner.PadRight(13) +
+                    " Wr: " + writeWinner.PadRight(13) +
+                    " El: " + elapsedWinner.PadRight(13));
 
                 if (qsWinRequirement <= quickSortWins)
                 {

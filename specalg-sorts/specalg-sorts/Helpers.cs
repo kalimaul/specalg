@@ -24,6 +24,7 @@ namespace specalg_sorts
             array[idx1] = array[idx2];
             array[idx2] = tmp;
             res.accessCount += 4;
+            res.arrayWriteCount += 2;
         }
 
         public static void FillArrayWithRandomData(int[] array, int maxVal)

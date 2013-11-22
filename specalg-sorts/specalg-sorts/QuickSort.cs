@@ -33,6 +33,7 @@ namespace specalg_sorts
             for (int i = from; i < to; ++i)
             {
                 ++res.innerIterationCount;
+                ++res.accessCount;
 
                 if (array[i] <= pivotVal)
                 {
@@ -78,6 +79,7 @@ namespace specalg_sorts
             for (int i = from; i < to; ++i)
             {
                 ++res.innerIterationCount;
+                ++res.accessCount;
 
                 if (array[i] <= pivotVal)
                 {

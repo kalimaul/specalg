@@ -16,11 +16,13 @@ namespace specalg_sorts
                 {
                     ++res.innerIterationCount;
                     res.accessCount += 2;
+                    ++res.arrayWriteCount;
                     array[holePos] = array[holePos - 1];
                     --holePos;
                 }
 
                 ++res.accessCount;
+                ++res.arrayWriteCount;
                 array[holePos] = val;
             }
         }
