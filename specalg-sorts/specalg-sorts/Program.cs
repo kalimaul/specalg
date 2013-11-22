@@ -12,8 +12,8 @@ namespace specalg_sorts
         static void Main(string[] args)
         {
             RunOnAll(TestAlgorithm);
-            new MainForm().ShowDialog();
-            //PrintRunSpeeds();
+            //new MainForm().ShowDialog();
+            PrintRunSpeeds();
             //SmallArrayCountRace();
         }
 
@@ -25,7 +25,7 @@ namespace specalg_sorts
             int arrayCount = 1;
 
             string qsname = typeof(QuickSort).Name;
-            string rqsname = typeof(RandomQSort).Name;
+            string rqsname = /*typeof(RandomQSort).Name*/"nonde";
             int quickSortWins = 0;
 
             while (arrayCount < 1000)
@@ -100,8 +100,10 @@ namespace specalg_sorts
         {
             del(new SelectionSort());
             del(new InsertionSort());
-            del(new RandomQSort());
+            //del(new RandomQSort());
             del(new QuickSort());
+            del(new ThreeWayQuickSort());
+            del(new OptimizedQuickSort(30));
         }
 
         static void PrintRunningSpeed(SortingAlgorithm sort, int[] numbers, int runCount)
