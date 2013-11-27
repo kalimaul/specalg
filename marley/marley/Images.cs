@@ -10,60 +10,88 @@ namespace marley
 {
     class Images
     {
-        public enum AvgMethod
+        int width, height;
+
+        List<KeyValuePair<Color, Bitmap>> images = new List<KeyValuePair<Color, Bitmap>>();
+
+        public Images(string dir, int w, int h)
         {
-            Resize, FullSize
-        };
+            width = w;
+            height = h;
 
-        const int resizedSize = 16;
+            int i = 0;
 
-        List<string> imgFiles = new List<string>();
-        AvgMethod avgMethod;
-
-        public Images(string dir, AvgMethod avgMethod)
-        {
-            this.avgMethod = avgMethod;
-
-            foreach (string img in Directory.EnumerateFiles(dir))
+            foreach (string imgPath in Directory.EnumerateFiles(dir))
             {
-                if (img.EndsWith(".jpg"))
+                Console.WriteLine("Loading " + i);
+                if (imgPath.EndsWith(".jpg"))
                 {
-                    imgFiles.Add(img);
+                    using (Bitmap img = Bitmap.FromFile(imgPath) as Bitmap)
+                    {
+                        Bitmap resized = ResizeBitmap(img, width, height);
+                        images.Add(new KeyValuePair<Color, Bitmap>(AverageColor(resized), resized));
+                    }
+                }
+
+                ++i;
+            }
+        }
+
+        public Bitmap FindNearestColoredImage(Color color, int width, int height)
+        {
+            Bitmap best = null;
+            Color bestAvg = Color.White;
+
+            foreach (KeyValuePair<Color, Bitmap> image in images)
+            {
+                if (best == null)
+                {
+                    best = image.Value;
+                    bestAvg = image.Key;
+                }
+                else
+                {
+                    if (ColorDiff(image.Key, color) < ColorDiff(bestAvg, color))
+                    {
+                        best = image.Value;
+                        bestAvg = image.Key;
+                    }
+                }
+            }
+
+            return best;
+        }
+
+        public static Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
+        {
+            return new Bitmap(sourceBMP, new Size(width, height));
+        }
+
+        public static Bitmap CropArea(Bitmap original, int posX, int posY, int width, int height)
+        {
+            Bitmap ret = new Bitmap(width, height);
+            for (int x = posX; x < posX + width && x < original.Width; ++x)
+            {
+                for (int y = posY; y < posY + height && y < original.Height; ++y)
+                {
+                    ret.SetPixel(x - posX, y - posY, original.GetPixel(x, y));
+                }
+            }
+            return ret;
+        }
+
+        public static void DrawOver(Bitmap original, Bitmap small, int posX, int posY)
+        {
+            for (int x = posX; x < posX + small.Width && x < original.Width; ++x)
+            {
+                for (int y = posY; y < posY + small.Height && y < original.Height; ++y)
+                {
+                    original.SetPixel(x, y, small.GetPixel(x - posX, y - posY));
                 }
             }
         }
 
-        public void ListPixelValues()
-        {
-            foreach (string imgPath in imgFiles)
-            {
-                using (Bitmap img = Bitmap.FromFile(imgPath) as Bitmap)
-                {
-                    Color avg;
-                    if (avgMethod == AvgMethod.FullSize)
-                    {
-                        avg = AverageColor(img);
-                    }
-                    else
-                    {
-                        Bitmap resized = ResizeBitmap(img, resizedSize, resizedSize);
-                        avg = AverageColor(resized);
-                    }
-
-                    System.Console.WriteLine(imgPath + ": " + avg);
-                }
-            }
-        }
-
-        static Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
-        {
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
-                g.DrawImage(sourceBMP, 0, 0, width, height);
-            return result;
-        }
-
-        static Color AverageColor(Bitmap img)
+        public static Color AverageColor(Bitmap img)
         {
             double r = 0, g = 0, b = 0;
 
@@ -83,6 +111,15 @@ namespace marley
             b /= (img.Width * img.Height);
 
             return Color.FromArgb((int)r, (int)g, (int)b);
+        }
+
+        public static double ColorDiff(Color c1, Color c2)
+        {
+            double rdiff = (double)c2.R - (double)c1.R;
+            double gdiff = (double)c2.G - (double)c1.G;
+            double bdiff = (double)c2.B - (double)c1.B;
+
+            return Math.Sqrt(rdiff * rdiff + gdiff * gdiff + bdiff * bdiff);
         }
     }
 }
