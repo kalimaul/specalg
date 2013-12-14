@@ -22,7 +22,7 @@ namespace specalg_sorts
 
         void UpdateStuff()
         {
-            sorts = new List<SortingAlgorithm>(5);
+            sorts = new List<SortingAlgorithm>();
             if (insertionCheckBox.Checked)
             {
                 sorts.Add(new InsertionSort());
@@ -54,12 +54,27 @@ namespace specalg_sorts
         private void MainForm_Load(object sender, EventArgs e)
         {
             UpdateStuff();
-            statusLabel.Text = "";
         }
 
         private void sortButton_Click(object sender, EventArgs e)
         {
-            statusLabel.Text = "Filling array...\n";
+            if (sortButton.Enabled)
+            {
+                sortButton.Enabled = false;
+
+                elemCount.Enabled = false;
+                maxVal.Enabled = false;
+                sortRuns.Enabled = false;
+                optimizedQSSwitchAt.Enabled = false;
+
+                selectionCheckBox.Enabled = false;
+                insertionCheckBox.Enabled = false;
+                quicksortCheckBox.Enabled = false;
+                threewayQSCheckbox.Enabled = false;
+                optimizedQSCheckbox.Enabled = false;
+            }
+
+            statusLogBox.Text = "Filling array...\n";
             UpdateStuff();
             int[] array = new int[(int)elemCount.Value];
             Helpers.FillArrayWithRandomData(array, (int)maxVal.Value);
@@ -67,12 +82,28 @@ namespace specalg_sorts
             int runs = (int)sortRuns.Value;
             foreach (SortingAlgorithm sort in sorts)
             {
-                statusLabel.Text += "Sorting with " + sort.GetType().Name + "\n";
+                statusLogBox.Text += "\nSorting with " + sort.GetType().Name + "\n";
                 Refresh();
                 SortingAlgorithm.Result res = sort.SetArray(array).Run(runs);
                 res.Divide(array.Length);
-                statusLabel.Text += sort.GetType().Name + ": " + res.ToString() + "\n";
+                statusLogBox.Text += sort.GetType().Name + ": " + res.ToString() + "\n";
                 Refresh();
+            }
+
+            if (!sortButton.Enabled)
+            {
+                sortButton.Enabled = true;
+
+                elemCount.Enabled = true;
+                maxVal.Enabled = true;
+                sortRuns.Enabled = true;
+                optimizedQSSwitchAt.Enabled = true;
+
+                selectionCheckBox.Enabled = true;
+                insertionCheckBox.Enabled = true;
+                quicksortCheckBox.Enabled = true;
+                threewayQSCheckbox.Enabled = true;
+                optimizedQSCheckbox.Enabled = true;
             }
         }
     }

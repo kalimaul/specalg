@@ -43,6 +43,7 @@
             this.optimizedQSCheckbox = new System.Windows.Forms.CheckBox();
             this.optimizedQSSwitchAt = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.statusLogBox = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.elemCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sortRuns)).BeginInit();
@@ -51,7 +52,8 @@
             // 
             // elemCount
             // 
-            this.elemCount.Location = new System.Drawing.Point(30, 51);
+            this.elemCount.Location = new System.Drawing.Point(476, 13);
+            this.elemCount.Margin = new System.Windows.Forms.Padding(2);
             this.elemCount.Maximum = new decimal(new int[] {
             1410065408,
             2,
@@ -63,7 +65,7 @@
             0,
             0});
             this.elemCount.Name = "elemCount";
-            this.elemCount.Size = new System.Drawing.Size(120, 22);
+            this.elemCount.Size = new System.Drawing.Size(90, 20);
             this.elemCount.TabIndex = 1;
             this.elemCount.Value = new decimal(new int[] {
             1000,
@@ -73,14 +75,15 @@
             // 
             // maxVal
             // 
-            this.maxVal.Location = new System.Drawing.Point(187, 51);
+            this.maxVal.Location = new System.Drawing.Point(476, 41);
+            this.maxVal.Margin = new System.Windows.Forms.Padding(2);
             this.maxVal.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.maxVal.Name = "maxVal";
-            this.maxVal.Size = new System.Drawing.Size(120, 22);
+            this.maxVal.Size = new System.Drawing.Size(90, 20);
             this.maxVal.TabIndex = 2;
             this.maxVal.Value = new decimal(new int[] {
             2147483647,
@@ -91,26 +94,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 9);
+            this.label1.Location = new System.Drawing.Point(358, 15);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 17);
+            this.label1.Size = new System.Drawing.Size(101, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Number of elements";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(184, 9);
+            this.label2.Location = new System.Drawing.Point(403, 43);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 17);
+            this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "Max value";
             // 
             // sortButton
             // 
-            this.sortButton.Location = new System.Drawing.Point(527, 51);
+            this.sortButton.Location = new System.Drawing.Point(11, 11);
+            this.sortButton.Margin = new System.Windows.Forms.Padding(2);
             this.sortButton.Name = "sortButton";
-            this.sortButton.Size = new System.Drawing.Size(75, 23);
+            this.sortButton.Size = new System.Drawing.Size(56, 20);
             this.sortButton.TabIndex = 9;
             this.sortButton.Text = "Sort!";
             this.sortButton.UseVisualStyleBackColor = true;
@@ -119,15 +125,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(350, 9);
+            this.label3.Location = new System.Drawing.Point(379, 72);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 17);
+            this.label3.Size = new System.Drawing.Size(80, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Sort Run Count";
             // 
             // sortRuns
             // 
-            this.sortRuns.Location = new System.Drawing.Point(353, 51);
+            this.sortRuns.Location = new System.Drawing.Point(476, 70);
+            this.sortRuns.Margin = new System.Windows.Forms.Padding(2);
             this.sortRuns.Maximum = new decimal(new int[] {
             2147483647,
             0,
@@ -139,7 +147,7 @@
             0,
             0});
             this.sortRuns.Name = "sortRuns";
-            this.sortRuns.Size = new System.Drawing.Size(120, 22);
+            this.sortRuns.Size = new System.Drawing.Size(90, 20);
             this.sortRuns.TabIndex = 11;
             this.sortRuns.Value = new decimal(new int[] {
             1000,
@@ -150,20 +158,23 @@
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(27, 167);
+            this.statusLabel.Location = new System.Drawing.Point(9, 149);
+            this.statusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(46, 17);
+            this.statusLabel.Size = new System.Drawing.Size(40, 13);
             this.statusLabel.TabIndex = 12;
-            this.statusLabel.Text = "status";
+            this.statusLabel.Text = "Status:";
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // selectionCheckBox
             // 
             this.selectionCheckBox.AutoSize = true;
             this.selectionCheckBox.Checked = true;
             this.selectionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.selectionCheckBox.Location = new System.Drawing.Point(30, 113);
+            this.selectionCheckBox.Location = new System.Drawing.Point(157, 14);
+            this.selectionCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.selectionCheckBox.Name = "selectionCheckBox";
-            this.selectionCheckBox.Size = new System.Drawing.Size(118, 21);
+            this.selectionCheckBox.Size = new System.Drawing.Size(92, 17);
             this.selectionCheckBox.TabIndex = 13;
             this.selectionCheckBox.Text = "Selection Sort";
             this.selectionCheckBox.UseVisualStyleBackColor = true;
@@ -173,9 +184,10 @@
             this.insertionCheckBox.AutoSize = true;
             this.insertionCheckBox.Checked = true;
             this.insertionCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.insertionCheckBox.Location = new System.Drawing.Point(187, 113);
+            this.insertionCheckBox.Location = new System.Drawing.Point(157, 42);
+            this.insertionCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.insertionCheckBox.Name = "insertionCheckBox";
-            this.insertionCheckBox.Size = new System.Drawing.Size(114, 21);
+            this.insertionCheckBox.Size = new System.Drawing.Size(88, 17);
             this.insertionCheckBox.TabIndex = 14;
             this.insertionCheckBox.Text = "Insertion Sort";
             this.insertionCheckBox.UseVisualStyleBackColor = true;
@@ -185,9 +197,10 @@
             this.quicksortCheckBox.AutoSize = true;
             this.quicksortCheckBox.Checked = true;
             this.quicksortCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.quicksortCheckBox.Location = new System.Drawing.Point(353, 113);
+            this.quicksortCheckBox.Location = new System.Drawing.Point(157, 70);
+            this.quicksortCheckBox.Margin = new System.Windows.Forms.Padding(2);
             this.quicksortCheckBox.Name = "quicksortCheckBox";
-            this.quicksortCheckBox.Size = new System.Drawing.Size(90, 21);
+            this.quicksortCheckBox.Size = new System.Drawing.Size(71, 17);
             this.quicksortCheckBox.TabIndex = 15;
             this.quicksortCheckBox.Text = "Quicksort";
             this.quicksortCheckBox.UseVisualStyleBackColor = true;
@@ -197,9 +210,10 @@
             this.threewayQSCheckbox.AutoSize = true;
             this.threewayQSCheckbox.Checked = true;
             this.threewayQSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.threewayQSCheckbox.Location = new System.Drawing.Point(471, 113);
+            this.threewayQSCheckbox.Location = new System.Drawing.Point(157, 98);
+            this.threewayQSCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.threewayQSCheckbox.Name = "threewayQSCheckbox";
-            this.threewayQSCheckbox.Size = new System.Drawing.Size(131, 21);
+            this.threewayQSCheckbox.Size = new System.Drawing.Size(102, 17);
             this.threewayQSCheckbox.TabIndex = 16;
             this.threewayQSCheckbox.Text = "3-way Quicksort";
             this.threewayQSCheckbox.UseVisualStyleBackColor = true;
@@ -209,23 +223,25 @@
             this.optimizedQSCheckbox.AutoSize = true;
             this.optimizedQSCheckbox.Checked = true;
             this.optimizedQSCheckbox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.optimizedQSCheckbox.Location = new System.Drawing.Point(645, 113);
+            this.optimizedQSCheckbox.Location = new System.Drawing.Point(157, 126);
+            this.optimizedQSCheckbox.Margin = new System.Windows.Forms.Padding(2);
             this.optimizedQSCheckbox.Name = "optimizedQSCheckbox";
-            this.optimizedQSCheckbox.Size = new System.Drawing.Size(157, 21);
+            this.optimizedQSCheckbox.Size = new System.Drawing.Size(120, 17);
             this.optimizedQSCheckbox.TabIndex = 17;
             this.optimizedQSCheckbox.Text = "Optimized Quicksort";
             this.optimizedQSCheckbox.UseVisualStyleBackColor = true;
             // 
             // optimizedQSSwitchAt
             // 
-            this.optimizedQSSwitchAt.Location = new System.Drawing.Point(768, 145);
+            this.optimizedQSSwitchAt.Location = new System.Drawing.Point(476, 99);
+            this.optimizedQSSwitchAt.Margin = new System.Windows.Forms.Padding(2);
             this.optimizedQSSwitchAt.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
             this.optimizedQSSwitchAt.Name = "optimizedQSSwitchAt";
-            this.optimizedQSSwitchAt.Size = new System.Drawing.Size(51, 22);
+            this.optimizedQSSwitchAt.Size = new System.Drawing.Size(38, 20);
             this.optimizedQSSwitchAt.TabIndex = 18;
             this.optimizedQSSwitchAt.Value = new decimal(new int[] {
             30,
@@ -236,17 +252,29 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(624, 147);
+            this.label4.Location = new System.Drawing.Point(354, 101);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(138, 17);
+            this.label4.Size = new System.Drawing.Size(105, 13);
             this.label4.TabIndex = 19;
             this.label4.Text = "Switch to insertion at";
             // 
+            // statusLogBox
+            // 
+            this.statusLogBox.Location = new System.Drawing.Point(12, 165);
+            this.statusLogBox.Name = "statusLogBox";
+            this.statusLogBox.ReadOnly = true;
+            this.statusLogBox.Size = new System.Drawing.Size(685, 349);
+            this.statusLogBox.TabIndex = 20;
+            this.statusLogBox.Text = "";
+            this.statusLogBox.BackColor = System.Drawing.SystemColors.Window;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 399);
+            this.ClientSize = new System.Drawing.Size(709, 526);
+            this.Controls.Add(this.statusLogBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.optimizedQSSwitchAt);
             this.Controls.Add(this.optimizedQSCheckbox);
@@ -262,6 +290,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.maxVal);
             this.Controls.Add(this.elemCount);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Specalg-Sort";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -291,5 +320,6 @@
         private System.Windows.Forms.CheckBox optimizedQSCheckbox;
         private System.Windows.Forms.NumericUpDown optimizedQSSwitchAt;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RichTextBox statusLogBox;
     }
 }
