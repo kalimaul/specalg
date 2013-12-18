@@ -10,8 +10,12 @@ namespace marley
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            new MainWindow().ShowDialog();
+
+#if false
             string baseDir = "imgs";
             if (!Directory.Exists(baseDir))
             {
@@ -41,6 +45,7 @@ namespace marley
 
                 bigBitmap.Save("bin/produce.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             }
+#endif
         }
     }
 }

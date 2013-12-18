@@ -10,39 +10,43 @@ namespace marley
 {
     class Images
     {
-        int width, height;
+        const int avgColorPxSize = 2;
 
-        List<KeyValuePair<Color, Bitmap>> images = new List<KeyValuePair<Color, Bitmap>>();
+        List<KeyValuePair<Color, string>> images = new List<KeyValuePair<Color, string>>();
+        public delegate void OnLoadEvent(string message);
 
-        public Images(string dir, int w, int h)
+        public void LoadDir(string dir, OnLoadEvent handler = null)
         {
-            width = w;
-            height = h;
-
-            int i = 0;
-
             foreach (string imgPath in Directory.EnumerateFiles(dir))
             {
-                Console.WriteLine("Loading " + i);
-                if (imgPath.EndsWith(".jpg"))
+                if (handler != null)
+                {
+                    handler("Loading " + imgPath);
+                }
+
+                try
                 {
                     using (Bitmap img = Bitmap.FromFile(imgPath) as Bitmap)
                     {
-                        Bitmap resized = ResizeBitmap(img, width, height);
-                        images.Add(new KeyValuePair<Color, Bitmap>(AverageColor(resized), resized));
+                        images.Add(new KeyValuePair<Color, string>(AverageColor(img), imgPath));
                     }
                 }
-
-                ++i;
+                catch (Exception e)
+                {
+                    if (handler != null)
+                    {
+                        handler("Error loading " + imgPath + ": " + e.ToString());
+                    }
+                }
             }
         }
 
-        public Bitmap FindNearestColoredImage(Color color, int width, int height)
+        public string FindNearestColoredImage(Color color, int width, int height)
         {
-            Bitmap best = null;
+            string best = null;
             Color bestAvg = Color.White;
 
-            foreach (KeyValuePair<Color, Bitmap> image in images)
+            foreach (KeyValuePair<Color, string> image in images)
             {
                 if (best == null)
                 {
@@ -93,6 +97,11 @@ namespace marley
 
         public static Color AverageColor(Bitmap img)
         {
+            if (img.Width > avgColorPxSize && img.Height > avgColorPxSize)
+            {
+                img = ResizeBitmap(img, avgColorPxSize, avgColorPxSize);
+            }
+
             double r = 0, g = 0, b = 0;
 
             for (int x = 0; x < img.Width; ++x)
