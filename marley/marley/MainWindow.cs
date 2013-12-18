@@ -63,48 +63,18 @@ namespace marley
             }
         }
 
+        void MosaicEventHandler(Bitmap bmp)
+        {
+            imgForm.pictureBox.Image = bmp;
+            imgForm.Refresh();
+        }
+
         private void generateMosaicButton_Click(object sender, EventArgs e)
         {
             if (imgForm.pictureBox.Image != null)
             {
-                const int rows = 80;
-                const int cols = 80;
                 Bitmap bmp = imgForm.pictureBox.Image as Bitmap;
-                int rowHeight = bmp.Height / rows;
-                int colWidth = bmp.Width / cols;
-
-                Dictionary<string, Bitmap> resizedBitmaps = new Dictionary<string, Bitmap>();
-
-                for (int x = 0; x < cols; ++x)
-                {
-                    for (int y = 0; y < rows; ++y)
-                    {
-                        using (Bitmap cropped = Images.CropArea(bmp, x * colWidth, y * rowHeight, colWidth, rowHeight))
-                        {
-                            Color avg = Images.AverageColor(cropped);
-                            string nearest = images.FindNearestColoredImage(avg);
-
-                            if (nearest != null)
-                            {
-                                Bitmap resized = null;
-                                if (!resizedBitmaps.TryGetValue(nearest, out resized))
-                                {
-                                    using (Bitmap nearestBmp = Bitmap.FromFile(nearest) as Bitmap)
-                                    {
-                                        using (Bitmap nearestResized = Images.ResizeBitmap(nearestBmp, colWidth, rowHeight))
-                                        {
-                                            resized = nearestResized.Clone() as Bitmap;
-                                            resizedBitmaps.Add(nearest, resized);
-                                        }
-                                    }
-                                }
-                                Images.DrawOver(bmp, resized, x * colWidth, y * rowHeight);
-                                imgForm.pictureBox.Image = bmp;
-                                imgForm.Refresh();
-                            }
-                        }
-                    }
-                }
+                images.CreateMosaic(bmp, (int)rowsCounter.Value, (int)colsCounter.Value, MosaicEventHandler);
             }
         }
     }

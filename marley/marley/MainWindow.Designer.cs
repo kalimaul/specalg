@@ -32,6 +32,12 @@
             this.logBox = new System.Windows.Forms.RichTextBox();
             this.imgLoadButton = new System.Windows.Forms.Button();
             this.generateMosaicButton = new System.Windows.Forms.Button();
+            this.rowsCounter = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.colsCounter = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.rowsCounter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colsCounter)).BeginInit();
             this.SuspendLayout();
             // 
             // ImgsLoadButton
@@ -73,18 +79,87 @@
             this.generateMosaicButton.UseVisualStyleBackColor = true;
             this.generateMosaicButton.Click += new System.EventHandler(this.generateMosaicButton_Click);
             // 
+            // rowsCounter
+            // 
+            this.rowsCounter.Location = new System.Drawing.Point(443, 81);
+            this.rowsCounter.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.rowsCounter.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.rowsCounter.Name = "rowsCounter";
+            this.rowsCounter.Size = new System.Drawing.Size(120, 22);
+            this.rowsCounter.TabIndex = 5;
+            this.rowsCounter.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(375, 81);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 17);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Rows";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(375, 124);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 17);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Cols";
+            // 
+            // colsCounter
+            // 
+            this.colsCounter.Location = new System.Drawing.Point(443, 124);
+            this.colsCounter.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.colsCounter.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.colsCounter.Name = "colsCounter";
+            this.colsCounter.Size = new System.Drawing.Size(120, 22);
+            this.colsCounter.TabIndex = 8;
+            this.colsCounter.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 458);
+            this.Controls.Add(this.colsCounter);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.rowsCounter);
             this.Controls.Add(this.generateMosaicButton);
             this.Controls.Add(this.imgLoadButton);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.ImgsLoadButton);
             this.Name = "MainWindow";
             this.Text = "MainWindow";
+            ((System.ComponentModel.ISupportInitialize)(this.rowsCounter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colsCounter)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -94,5 +169,9 @@
         private System.Windows.Forms.RichTextBox logBox;
         private System.Windows.Forms.Button imgLoadButton;
         private System.Windows.Forms.Button generateMosaicButton;
+        private System.Windows.Forms.NumericUpDown rowsCounter;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown colsCounter;
     }
 }

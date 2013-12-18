@@ -10,7 +10,7 @@ namespace marley
 {
     class Images
     {
-        const int avgColorPxSize = 2;
+        const int avgColorPxSize = 24;
 
         List<KeyValuePair<Color, string>> images = new List<KeyValuePair<Color, string>>();
         public delegate void OnLoadEvent(string message);
@@ -64,6 +64,49 @@ namespace marley
             }
 
             return best;
+        }
+
+        public delegate void MosaicEventHandler(Bitmap bmp);
+
+        public void CreateMosaic(Bitmap bmp, int rows, int cols, MosaicEventHandler handler = null)
+        {
+            int rowHeight = bmp.Height / rows;
+            int colWidth = bmp.Width / cols;
+
+            Dictionary<string, Bitmap> resizedBitmaps = new Dictionary<string, Bitmap>();
+
+            for (int x = 0; x < cols; ++x)
+            {
+                for (int y = 0; y < rows; ++y)
+                {
+                    using (Bitmap cropped = Images.CropArea(bmp, x * colWidth, y * rowHeight, colWidth, rowHeight))
+                    {
+                        Color avg = Images.AverageColor(cropped);
+                        string nearest = FindNearestColoredImage(avg);
+
+                        if (nearest != null)
+                        {
+                            Bitmap resized = null;
+                            if (!resizedBitmaps.TryGetValue(nearest, out resized))
+                            {
+                                using (Bitmap nearestBmp = Bitmap.FromFile(nearest) as Bitmap)
+                                {
+                                    using (Bitmap nearestResized = Images.ResizeBitmap(nearestBmp, colWidth, rowHeight))
+                                    {
+                                        resized = nearestResized.Clone() as Bitmap;
+                                        resizedBitmaps.Add(nearest, resized);
+                                    }
+                                }
+                            }
+                            Images.DrawOver(bmp, resized, x * colWidth, y * rowHeight);
+                            if (handler != null)
+                            {
+                                handler(bmp);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
