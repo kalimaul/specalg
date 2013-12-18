@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageDatabase.cs" />
     <Compile Include="Images.cs" />
     <Compile Include="ImgForm.cs">
       <SubType>Form</SubType>

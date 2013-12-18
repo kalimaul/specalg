@@ -12,7 +12,8 @@ namespace marley
     {
         const int avgColorPxSize = 24;
 
-        List<KeyValuePair<Color, string>> images = new List<KeyValuePair<Color, string>>();
+        ImageDatabase images = new ImageList();
+
         public delegate void OnLoadEvent(string message);
 
         public void LoadDir(string dir, OnLoadEvent handler = null)
@@ -28,7 +29,7 @@ namespace marley
                 {
                     using (Bitmap img = Bitmap.FromFile(imgPath) as Bitmap)
                     {
-                        images.Add(new KeyValuePair<Color, string>(AverageColor(img), imgPath));
+                        images.Insert(new ImageDatabase.Element(imgPath, AverageColor(img)));
                     }
                 }
                 catch (Exception e)
@@ -43,27 +44,7 @@ namespace marley
 
         public string FindNearestColoredImage(Color color)
         {
-            string best = null;
-            Color bestAvg = Color.White;
-
-            foreach (KeyValuePair<Color, string> image in images)
-            {
-                if (best == null)
-                {
-                    best = image.Value;
-                    bestAvg = image.Key;
-                }
-                else
-                {
-                    if (ColorDiff(image.Key, color) < ColorDiff(bestAvg, color))
-                    {
-                        best = image.Value;
-                        bestAvg = image.Key;
-                    }
-                }
-            }
-
-            return best;
+            return images.GetNearest(color).image;
         }
 
         public delegate void MosaicEventHandler(Bitmap bmp);
@@ -163,15 +144,6 @@ namespace marley
             b /= (img.Width * img.Height);
 
             return Color.FromArgb((int)r, (int)g, (int)b);
-        }
-
-        public static double ColorDiff(Color c1, Color c2)
-        {
-            double rdiff = (double)c2.R - (double)c1.R;
-            double gdiff = (double)c2.G - (double)c1.G;
-            double bdiff = (double)c2.B - (double)c1.B;
-
-            return Math.Sqrt(rdiff * rdiff + gdiff * gdiff + bdiff * bdiff);
         }
     }
 }
