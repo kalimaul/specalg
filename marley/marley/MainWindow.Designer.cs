@@ -30,6 +30,8 @@
         {
             this.ImgsLoadButton = new System.Windows.Forms.Button();
             this.logBox = new System.Windows.Forms.RichTextBox();
+            this.imgLoadButton = new System.Windows.Forms.Button();
+            this.generateMosaicButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ImgsLoadButton
@@ -51,11 +53,33 @@
             this.logBox.TabIndex = 2;
             this.logBox.Text = "";
             // 
+            // imgLoadButton
+            // 
+            this.imgLoadButton.Location = new System.Drawing.Point(188, 15);
+            this.imgLoadButton.Name = "imgLoadButton";
+            this.imgLoadButton.Size = new System.Drawing.Size(148, 35);
+            this.imgLoadButton.TabIndex = 3;
+            this.imgLoadButton.Text = "Load Main Image";
+            this.imgLoadButton.UseVisualStyleBackColor = true;
+            this.imgLoadButton.Click += new System.EventHandler(this.imgLoadButton_Click);
+            // 
+            // generateMosaicButton
+            // 
+            this.generateMosaicButton.Location = new System.Drawing.Point(375, 15);
+            this.generateMosaicButton.Name = "generateMosaicButton";
+            this.generateMosaicButton.Size = new System.Drawing.Size(152, 35);
+            this.generateMosaicButton.TabIndex = 4;
+            this.generateMosaicButton.Text = "Generate Mosaic";
+            this.generateMosaicButton.UseVisualStyleBackColor = true;
+            this.generateMosaicButton.Click += new System.EventHandler(this.generateMosaicButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 458);
+            this.Controls.Add(this.generateMosaicButton);
+            this.Controls.Add(this.imgLoadButton);
             this.Controls.Add(this.logBox);
             this.Controls.Add(this.ImgsLoadButton);
             this.Name = "MainWindow";
@@ -68,5 +92,7 @@
 
         private System.Windows.Forms.Button ImgsLoadButton;
         private System.Windows.Forms.RichTextBox logBox;
+        private System.Windows.Forms.Button imgLoadButton;
+        private System.Windows.Forms.Button generateMosaicButton;
     }
 }

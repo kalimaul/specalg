@@ -41,7 +41,7 @@ namespace marley
             }
         }
 
-        public string FindNearestColoredImage(Color color, int width, int height)
+        public string FindNearestColoredImage(Color color)
         {
             string best = null;
             Color bestAvg = Color.White;

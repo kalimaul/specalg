@@ -44,6 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Images.cs" />
+    <Compile Include="ImgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImgForm.Designer.cs">
+      <DependentUpon>ImgForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -57,6 +63,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ImgForm.resx">
+      <DependentUpon>ImgForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
