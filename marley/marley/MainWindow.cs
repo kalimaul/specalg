@@ -82,7 +82,13 @@ namespace marley
             if (imgForm.pictureBox.Image != null)
             {
                 Bitmap bmp = imgForm.pictureBox.Image as Bitmap;
-                images.CreateMosaic(bmp, (int)rowsCounter.Value, (int)colsCounter.Value, MosaicEventHandler);
+                int cols = (int)colsCounter.Value;
+                int rows = (int)rowsCounter.Value;
+
+                cols = Math.Min(cols, bmp.Width);
+                rows = Math.Min(rows, bmp.Height);
+
+                images.CreateMosaic(bmp, rows, cols, MosaicEventHandler);
             }
         }
     }

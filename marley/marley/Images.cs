@@ -54,36 +54,50 @@ namespace marley
             int rowHeight = bmp.Height / rows;
             int colWidth = bmp.Width / cols;
 
-            Dictionary<string, Bitmap> resizedBitmaps = new Dictionary<string, Bitmap>();
-
-            for (int x = 0; x < cols; ++x)
+            while (colWidth * (cols + 1) < bmp.Width)
             {
-                for (int y = 0; y < rows; ++y)
-                {
-                    using (Bitmap cropped = Images.CropArea(bmp, x * colWidth, y * rowHeight, colWidth, rowHeight))
-                    {
-                        Color avg = Images.AverageColor(cropped);
-                        string nearest = FindNearestColoredImage(avg);
+                ++cols;
+            }
 
-                        if (nearest != null)
+            while (rowHeight * (rows + 1) < bmp.Height)
+            {
+                ++rows;
+            }
+
+            for (int x = 0; x <= cols; ++x)
+            {
+                int startX = x * colWidth;
+                if (startX < bmp.Width)
+                {
+                    int width = Math.Min(bmp.Width - startX, colWidth);
+
+                    for (int y = 0; y <= rows; ++y)
+                    {
+                        int startY = y * rowHeight;
+
+                        if (startY < bmp.Height)
                         {
-                            Bitmap resized = null;
-                            if (!resizedBitmaps.TryGetValue(nearest, out resized))
+                            int height = Math.Min(bmp.Height - startY, rowHeight);
+
+                            using (Bitmap cropped = CropArea(bmp, startX, startY, width, height))
                             {
-                                using (Bitmap nearestBmp = Bitmap.FromFile(nearest) as Bitmap)
+                                Color avg = AverageColor(cropped);
+                                string nearest = FindNearestColoredImage(avg);
+
+                                if (nearest != null)
                                 {
-                                    using (Bitmap nearestResized = Images.ResizeBitmap(nearestBmp, colWidth, rowHeight))
+                                    using (Bitmap nearestBmp = Bitmap.FromFile(nearest) as Bitmap)
                                     {
-                                        resized = nearestResized.Clone() as Bitmap;
-                                        resizedBitmaps.Add(nearest, resized);
+                                        using (Bitmap nearestResized = ResizeBitmap(nearestBmp, width, height))
+                                        {
+                                            DrawOver(bmp, nearestResized, startX, startY);
+                                            if (handler != null)
+                                            {
+                                                handler(bmp);
+                                            }
+                                        }
                                     }
                                 }
-                            }
-
-                            Images.DrawOver(bmp, resized, x * colWidth, y * rowHeight);
-                            if (handler != null)
-                            {
-                                handler(bmp);
                             }
                         }
                     }
