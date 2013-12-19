@@ -98,7 +98,7 @@
             this.rowsCounter.Size = new System.Drawing.Size(120, 22);
             this.rowsCounter.TabIndex = 5;
             this.rowsCounter.Value = new decimal(new int[] {
-            80,
+            40,
             0,
             0,
             0});
@@ -138,7 +138,7 @@
             this.colsCounter.Size = new System.Drawing.Size(120, 22);
             this.colsCounter.TabIndex = 8;
             this.colsCounter.Value = new decimal(new int[] {
-            80,
+            40,
             0,
             0,
             0});
