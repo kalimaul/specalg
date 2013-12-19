@@ -36,6 +36,14 @@ namespace marley
             if (browser.ShowDialog() == DialogResult.OK)
             {
                 string path = browser.SelectedPath;
+                if (imageDBStructure.Text == "kdtree")
+                {
+                    images.images = new KDTree();
+                }
+                else
+                {
+                    images.images = new ImageList();
+                }
                 images.LoadDir(path, ImgEventHandler);
                 ImgEventHandler("Loaded.");
             }

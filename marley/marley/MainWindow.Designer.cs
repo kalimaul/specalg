@@ -36,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.colsCounter = new System.Windows.Forms.NumericUpDown();
+            this.imageDBStructure = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.rowsCounter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colsCounter)).BeginInit();
             this.SuspendLayout();
@@ -141,11 +143,35 @@
             0,
             0});
             // 
+            // imageDBStructure
+            // 
+            this.imageDBStructure.AllowDrop = true;
+            this.imageDBStructure.FormattingEnabled = true;
+            this.imageDBStructure.Items.AddRange(new object[] {
+            "kdtree",
+            "array"});
+            this.imageDBStructure.Location = new System.Drawing.Point(188, 121);
+            this.imageDBStructure.Name = "imageDBStructure";
+            this.imageDBStructure.Size = new System.Drawing.Size(121, 24);
+            this.imageDBStructure.TabIndex = 9;
+            this.imageDBStructure.Text = "kdtree";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(12, 124);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(164, 17);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Color Matching Structure";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(759, 458);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.imageDBStructure);
             this.Controls.Add(this.colsCounter);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -173,5 +199,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown colsCounter;
+        private System.Windows.Forms.ComboBox imageDBStructure;
+        private System.Windows.Forms.Label label3;
     }
 }

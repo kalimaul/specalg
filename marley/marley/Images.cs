@@ -12,7 +12,7 @@ namespace marley
     {
         const int avgColorPxSize = 24;
 
-        ImageDatabase images = new ImageList();
+        public ImageDatabase images;
 
         public delegate void OnLoadEvent(string message);
 
@@ -79,6 +79,7 @@ namespace marley
                                     }
                                 }
                             }
+
                             Images.DrawOver(bmp, resized, x * colWidth, y * rowHeight);
                             if (handler != null)
                             {
