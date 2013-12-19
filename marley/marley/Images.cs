@@ -99,6 +99,7 @@ namespace marley
         public static Bitmap CropArea(Bitmap original, int posX, int posY, int width, int height)
         {
             Bitmap ret = new Bitmap(width, height);
+
             for (int x = posX; x < posX + width && x < original.Width; ++x)
             {
                 for (int y = posY; y < posY + height && y < original.Height; ++y)
@@ -111,12 +112,9 @@ namespace marley
 
         public static void DrawOver(Bitmap original, Bitmap small, int posX, int posY)
         {
-            for (int x = posX; x < posX + small.Width && x < original.Width; ++x)
+            using (Graphics g = Graphics.FromImage(original))
             {
-                for (int y = posY; y < posY + small.Height && y < original.Height; ++y)
-                {
-                    original.SetPixel(x, y, small.GetPixel(x - posX, y - posY));
-                }
+                g.DrawImage(small, posX, posY, small.Width, small.Height);
             }
         }
 
