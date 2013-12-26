@@ -62,6 +62,8 @@ namespace specalg_sorts
 
         private void sortButton_Click(object sender, EventArgs e)
         {
+            UpdateStuff();
+
             sortThread = new Thread(delegate()
             {
                 try
@@ -73,8 +75,8 @@ namespace specalg_sorts
                         if (sortButton.Enabled)
                         {
                             sortButton.Enabled = false;
-                            runSpeedButton.Enabled = false;
                             arrayCountRaceButton.Enabled = false;
+                            arrayCountAllRaceButton.Enabled = false;
 
                             elemCount.Enabled = false;
                             maxVal.Enabled = false;
@@ -123,8 +125,8 @@ namespace specalg_sorts
                         if (!sortButton.Enabled)
                         {
                             sortButton.Enabled = true;
-                            runSpeedButton.Enabled = true;
                             arrayCountRaceButton.Enabled = true;
+                            arrayCountAllRaceButton.Enabled = true;
 
                             elemCount.Enabled = true;
                             maxVal.Enabled = true;
@@ -151,7 +153,7 @@ namespace specalg_sorts
             sortThread.Start();
         }
 
-        private void SmallArrayCountRace()
+        private void SmallArrayCountRaceOnFew()
         {
             const int runCount = 10000;
             const int qsWinRequirement = 10;
@@ -160,27 +162,25 @@ namespace specalg_sorts
 
             string qsname = typeof(QuickSort).Name;
             string rqsname = /*typeof(RandomQSort).Name*/"nonde";
-            int quickSortWins = 30;
+            int quickSortWins = 0;
 
-            while (arrayCount < 100)
+            while (arrayCount < 50)
             {
                 int[] numbers = new int[arrayCount];
                 Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
 
                 Dictionary<SortingAlgorithm.Result, string> results = new Dictionary<SortingAlgorithm.Result, string>();
 
-                RunOnAll(delegate(SortingAlgorithm sort)
+                RunOnFew(delegate(SortingAlgorithm sort)
                 {
                     results.Add(sort.SetArray(numbers).Run(runCount), sort.GetType().Name);
                 });
 
                 this.raceChart.BeginInvoke(new MethodInvoker(delegate
                 {
-                    this.raceChart.Series["Selection Sort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(0).elapsedTime);
-                    this.raceChart.Series["Insertion Sort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(1).elapsedTime);
-                    this.raceChart.Series["Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(2).elapsedTime);
-                    this.raceChart.Series["3-way Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(3).elapsedTime);
-                    this.raceChart.Series["Optimized Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(4).elapsedTime);
+                    this.raceChart.Series["Insertion Sort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(0).elapsedTime);
+                    this.raceChart.Series["Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(1).elapsedTime);
+                    this.raceChart.ResetAutoValues();
                 }));
 
                 List<SortingAlgorithm.Result> resList = new List<SortingAlgorithm.Result>(results.Keys);
@@ -221,123 +221,76 @@ namespace specalg_sorts
                     //break;
                 }
 
-                ++arrayCount;
+                arrayCount++;
             }
         }
 
-        private void PrintRunSpeeds()
+        private void SmallArrayCountRaceOnAll()
         {
-            const int arrayCount = 1000;
-            const int max = int.MaxValue;
-            const int runCount = 1000;
+            const int runCount = 10000;
 
-            int[] numbers = new int[arrayCount];
-            Helpers.FillArrayWithRandomData(numbers, max);
+            int arrayCount = 0;
 
-            this.statusLogBox.BeginInvoke(new MethodInvoker(delegate
+            while (arrayCount < 100)
             {
-                this.statusLogBox.AppendText(arrayCount + " elements, Max Value: " + max + ", Runs: " + runCount + "\n");
-                this.Refresh();
-            }));
+                int[] numbers = new int[arrayCount];
+                Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
 
-            RunOnAll(delegate(SortingAlgorithm sort)
-            {
-                PrintRunningSpeed(sort, numbers, runCount);
-            });
+                Dictionary<SortingAlgorithm.Result, string> results = new Dictionary<SortingAlgorithm.Result, string>();
+
+                RunOnAll(delegate(SortingAlgorithm sort)
+                {
+                    results.Add(sort.SetArray(numbers).Run(runCount), sort.GetType().Name);
+                });
+
+                this.allRaceChart.BeginInvoke(new MethodInvoker(delegate
+                {
+                    this.allRaceChart.Series["Selection Sort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(0).elapsedTime);
+                    this.allRaceChart.Series["Insertion Sort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(1).elapsedTime);
+                    this.allRaceChart.Series["Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(2).elapsedTime);
+                    this.allRaceChart.Series["3-way Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(3).elapsedTime);
+                    this.allRaceChart.Series["Optimized Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(4).elapsedTime);
+                    this.allRaceChart.ResetAutoValues();
+                }));
+
+                List<SortingAlgorithm.Result> resList = new List<SortingAlgorithm.Result>(results.Keys);
+                resList.Sort((t1, t2) => (t1.accessCount.CompareTo(t2.accessCount)));
+                string accessCountWinner = results[resList[0]];
+
+                resList.Sort((t1, t2) => (t1.innerIterationCount.CompareTo(t2.innerIterationCount)));
+                string iterationWinner = results[resList[0]];
+
+                resList.Sort((t1, t2) => (t1.elapsedTime.CompareTo(t2.elapsedTime)));
+                string elapsedWinner = results[resList[0]];
+
+                resList.Sort((t1, t2) => (t1.arrayWriteCount.CompareTo(t2.arrayWriteCount)));
+                string writeWinner = results[resList[0]];
+
+                this.statusLogBox.BeginInvoke(new MethodInvoker(delegate
+                {
+                    this.statusLogBox.AppendText(String.Format("S: {0, -8} Acc: {1, -25} It: {2, -25} Wr: {3, -25} El: {4, -25}\n", arrayCount.ToString(), accessCountWinner, iterationWinner, writeWinner, elapsedWinner));
+                    this.Refresh();
+                }));
+
+                arrayCount++;
+            }
         }
 
         private delegate void AlgorithmDelegate(SortingAlgorithm algo);
+
+        private void RunOnFew(AlgorithmDelegate del)
+        {
+            del(new InsertionSort());
+            del(new QuickSort());
+        }
 
         private void RunOnAll(AlgorithmDelegate del)
         {
             del(new SelectionSort());
             del(new InsertionSort());
-            //del(new RandomQSort());
             del(new QuickSort());
             del(new ThreeWayQuickSort());
             del(new OptimizedQuickSort(30));
-        }
-
-        private void PrintRunningSpeed(SortingAlgorithm sort, int[] numbers, int runCount)
-        {
-            sort.SetArray(numbers);
-            SortingAlgorithm.Result res = sort.Run(runCount);
-            res.Divide(numbers.Length);
-
-            this.statusLogBox.BeginInvoke(new MethodInvoker(delegate
-            {
-                this.statusLogBox.AppendText(sort.GetType().Name + ": ");
-                this.statusLogBox.AppendText(res.ToString() + "\n");
-                this.Refresh();
-            }));
-        }
-
-        private void runSpeedButton_Click(object sender, EventArgs e)
-        {
-            printSpeedThread = new Thread(delegate()
-            {
-                try
-                {
-                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
-                    {
-                        if (runSpeedButton.Enabled)
-                        {
-                            sortButton.Enabled = false;
-                            runSpeedButton.Enabled = false;
-                            arrayCountRaceButton.Enabled = false;
-
-                            elemCount.Enabled = false;
-                            maxVal.Enabled = false;
-                            sortRuns.Enabled = false;
-                            optimizedQSSwitchAt.Enabled = false;
-
-                            selectionCheckBox.Enabled = false;
-                            insertionCheckBox.Enabled = false;
-                            quicksortCheckBox.Enabled = false;
-                            threewayQSCheckbox.Enabled = false;
-                            optimizedQSCheckbox.Enabled = false;
-                        }
-
-                        statusLogBox.AppendText("=====  Run speed has been started  =====\n\n");
-                        statusLogBox.Refresh();
-                    }));
-
-                    PrintRunSpeeds();
-
-                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
-                    {
-                        statusLogBox.AppendText("\n=====  Run speed has been finished  =====\n\n");
-                        statusLogBox.Refresh();
-
-                        if (!runSpeedButton.Enabled)
-                        {
-                            sortButton.Enabled = true;
-                            runSpeedButton.Enabled = true;
-                            arrayCountRaceButton.Enabled = true;
-
-                            elemCount.Enabled = true;
-                            maxVal.Enabled = true;
-                            sortRuns.Enabled = true;
-                            optimizedQSSwitchAt.Enabled = true;
-
-                            selectionCheckBox.Enabled = true;
-                            insertionCheckBox.Enabled = true;
-                            quicksortCheckBox.Enabled = true;
-                            threewayQSCheckbox.Enabled = true;
-                            optimizedQSCheckbox.Enabled = true;
-                        }
-                    }));
-                }
-                catch (Exception ex)
-                {
-                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
-                    {
-                        statusLogBox.AppendText("Exception has been caught during speed print!: " + ex.Message);
-                    }));
-                }
-            });
-
-            printSpeedThread.Start();
         }
 
         private void arrayCountRaceButton_Click(object sender, EventArgs e)
@@ -351,8 +304,8 @@ namespace specalg_sorts
                         if (arrayCountRaceButton.Enabled)
                         {
                             sortButton.Enabled = false;
-                            runSpeedButton.Enabled = false;
                             arrayCountRaceButton.Enabled = false;
+                            arrayCountAllRaceButton.Enabled = false;
 
                             elemCount.Enabled = false;
                             maxVal.Enabled = false;
@@ -369,14 +322,11 @@ namespace specalg_sorts
                         statusLogBox.AppendText("=====  Array count race has been started  =====\n\n");
                         statusLogBox.Refresh();
 
-                        raceChart.Series["Selection Sort"].Points.Clear();
                         raceChart.Series["Insertion Sort"].Points.Clear();
                         raceChart.Series["Quicksort"].Points.Clear();
-                        raceChart.Series["3-way Quicksort"].Points.Clear();
-                        raceChart.Series["Optimized Quicksort"].Points.Clear();
                     }));
 
-                    SmallArrayCountRace();
+                    SmallArrayCountRaceOnFew();
 
                     statusLogBox.BeginInvoke(new MethodInvoker(delegate
                     {
@@ -386,8 +336,8 @@ namespace specalg_sorts
                         if (!arrayCountRaceButton.Enabled)
                         {
                             sortButton.Enabled = true;
-                            runSpeedButton.Enabled = true;
                             arrayCountRaceButton.Enabled = true;
+                            arrayCountAllRaceButton.Enabled = true;
 
                             elemCount.Enabled = true;
                             maxVal.Enabled = true;
@@ -436,6 +386,80 @@ namespace specalg_sorts
 
             Task t1 = new Task(stop, "alpha");
             t1.Start();
+        }
+
+        private void arrayCountAllRaceButton_Click(object sender, EventArgs e)
+        {
+            arrayRaceThread = new Thread(delegate()
+            {
+                try
+                {
+                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        if (arrayCountAllRaceButton.Enabled)
+                        {
+                            sortButton.Enabled = false;
+                            arrayCountRaceButton.Enabled = false;
+                            arrayCountAllRaceButton.Enabled = false;
+
+                            elemCount.Enabled = false;
+                            maxVal.Enabled = false;
+                            sortRuns.Enabled = false;
+                            optimizedQSSwitchAt.Enabled = false;
+
+                            selectionCheckBox.Enabled = false;
+                            insertionCheckBox.Enabled = false;
+                            quicksortCheckBox.Enabled = false;
+                            threewayQSCheckbox.Enabled = false;
+                            optimizedQSCheckbox.Enabled = false;
+                        }
+
+                        statusLogBox.AppendText("=====  Array count race on all algorithm has been started  =====\n\n");
+                        statusLogBox.Refresh();
+
+                        allRaceChart.Series["Selection Sort"].Points.Clear();
+                        allRaceChart.Series["Insertion Sort"].Points.Clear();
+                        allRaceChart.Series["Quicksort"].Points.Clear();
+                        allRaceChart.Series["3-way Quicksort"].Points.Clear();
+                        allRaceChart.Series["Optimized Quicksort"].Points.Clear();
+                    }));
+
+                    SmallArrayCountRaceOnAll();
+
+                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        statusLogBox.AppendText("\n=====  Array count race on all algorithm has been finished  =====\n\n");
+                        statusLogBox.Refresh();
+
+                        if (!arrayCountAllRaceButton.Enabled)
+                        {
+                            sortButton.Enabled = true;
+                            arrayCountRaceButton.Enabled = true;
+                            arrayCountAllRaceButton.Enabled = true;
+
+                            elemCount.Enabled = true;
+                            maxVal.Enabled = true;
+                            sortRuns.Enabled = true;
+                            optimizedQSSwitchAt.Enabled = true;
+
+                            selectionCheckBox.Enabled = true;
+                            insertionCheckBox.Enabled = true;
+                            quicksortCheckBox.Enabled = true;
+                            threewayQSCheckbox.Enabled = true;
+                            optimizedQSCheckbox.Enabled = true;
+                        }
+                    }));
+                }
+                catch (Exception ex)
+                {
+                    statusLogBox.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        statusLogBox.AppendText("Exception has been caught during array count race on all algorithm!: " + ex.Message);
+                    }));
+                }
+            });
+
+            arrayRaceThread.Start();
         }
     }
 }
