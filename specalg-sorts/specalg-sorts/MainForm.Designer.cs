@@ -28,6 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.elemCount = new System.Windows.Forms.NumericUpDown();
             this.maxVal = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -35,7 +43,6 @@
             this.sortButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.sortRuns = new System.Windows.Forms.NumericUpDown();
-            this.statusLabel = new System.Windows.Forms.Label();
             this.selectionCheckBox = new System.Windows.Forms.CheckBox();
             this.insertionCheckBox = new System.Windows.Forms.CheckBox();
             this.quicksortCheckBox = new System.Windows.Forms.CheckBox();
@@ -44,10 +51,20 @@
             this.optimizedQSSwitchAt = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.statusLogBox = new System.Windows.Forms.RichTextBox();
+            this.runSpeedButton = new System.Windows.Forms.Button();
+            this.arrayCountRaceButton = new System.Windows.Forms.Button();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.logPage = new System.Windows.Forms.TabPage();
+            this.chartPage = new System.Windows.Forms.TabPage();
+            this.raceChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.elemCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sortRuns)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.optimizedQSSwitchAt)).BeginInit();
+            this.tabControl.SuspendLayout();
+            this.logPage.SuspendLayout();
+            this.chartPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.raceChart)).BeginInit();
             this.SuspendLayout();
             // 
             // elemCount
@@ -113,10 +130,10 @@
             // 
             // sortButton
             // 
-            this.sortButton.Location = new System.Drawing.Point(11, 11);
+            this.sortButton.Location = new System.Drawing.Point(12, 10);
             this.sortButton.Margin = new System.Windows.Forms.Padding(2);
             this.sortButton.Name = "sortButton";
-            this.sortButton.Size = new System.Drawing.Size(56, 20);
+            this.sortButton.Size = new System.Drawing.Size(75, 22);
             this.sortButton.TabIndex = 9;
             this.sortButton.Text = "Sort!";
             this.sortButton.UseVisualStyleBackColor = true;
@@ -154,17 +171,6 @@
             0,
             0,
             0});
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(9, 149);
-            this.statusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(40, 13);
-            this.statusLabel.TabIndex = 12;
-            this.statusLabel.Text = "Status:";
-            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // selectionCheckBox
             // 
@@ -261,20 +267,136 @@
             // 
             // statusLogBox
             // 
-            this.statusLogBox.Location = new System.Drawing.Point(12, 165);
+            this.statusLogBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.statusLogBox.BackColor = System.Drawing.SystemColors.Window;
+            this.statusLogBox.Location = new System.Drawing.Point(0, 0);
             this.statusLogBox.Name = "statusLogBox";
             this.statusLogBox.ReadOnly = true;
-            this.statusLogBox.Size = new System.Drawing.Size(685, 349);
+            this.statusLogBox.Size = new System.Drawing.Size(795, 387);
             this.statusLogBox.TabIndex = 20;
             this.statusLogBox.Text = "";
-            this.statusLogBox.BackColor = System.Drawing.SystemColors.Window;
+            // 
+            // runSpeedButton
+            // 
+            this.runSpeedButton.Location = new System.Drawing.Point(12, 41);
+            this.runSpeedButton.Name = "runSpeedButton";
+            this.runSpeedButton.Size = new System.Drawing.Size(75, 23);
+            this.runSpeedButton.TabIndex = 21;
+            this.runSpeedButton.Text = "Run speeds";
+            this.runSpeedButton.UseVisualStyleBackColor = true;
+            this.runSpeedButton.Click += new System.EventHandler(this.runSpeedButton_Click);
+            // 
+            // arrayCountRaceButton
+            // 
+            this.arrayCountRaceButton.Location = new System.Drawing.Point(12, 72);
+            this.arrayCountRaceButton.Name = "arrayCountRaceButton";
+            this.arrayCountRaceButton.Size = new System.Drawing.Size(75, 23);
+            this.arrayCountRaceButton.TabIndex = 22;
+            this.arrayCountRaceButton.Text = "Race!";
+            this.arrayCountRaceButton.UseVisualStyleBackColor = true;
+            this.arrayCountRaceButton.Click += new System.EventHandler(this.arrayCountRaceButton_Click);
+            // 
+            // tabControl
+            // 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl.Controls.Add(this.logPage);
+            this.tabControl.Controls.Add(this.chartPage);
+            this.tabControl.Location = new System.Drawing.Point(12, 165);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(803, 413);
+            this.tabControl.TabIndex = 23;
+            // 
+            // logPage
+            // 
+            this.logPage.Controls.Add(this.statusLogBox);
+            this.logPage.Location = new System.Drawing.Point(4, 22);
+            this.logPage.Name = "logPage";
+            this.logPage.Padding = new System.Windows.Forms.Padding(3);
+            this.logPage.Size = new System.Drawing.Size(795, 387);
+            this.logPage.TabIndex = 0;
+            this.logPage.Text = "Log";
+            this.logPage.UseVisualStyleBackColor = true;
+            // 
+            // chartPage
+            // 
+            this.chartPage.BackColor = System.Drawing.Color.White;
+            this.chartPage.Controls.Add(this.raceChart);
+            this.chartPage.Location = new System.Drawing.Point(4, 22);
+            this.chartPage.Name = "chartPage";
+            this.chartPage.Padding = new System.Windows.Forms.Padding(3);
+            this.chartPage.Size = new System.Drawing.Size(795, 387);
+            this.chartPage.TabIndex = 1;
+            this.chartPage.Text = "Charts";
+            // 
+            // raceChart
+            // 
+            this.raceChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.raceChart.BackColor = System.Drawing.Color.Gainsboro;
+            chartArea1.AxisX.Title = "Array count";
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            chartArea1.AxisY.Title = "Execution time in ms";
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            chartArea1.Name = "ChartArea1";
+            this.raceChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.raceChart.Legends.Add(legend1);
+            this.raceChart.Location = new System.Drawing.Point(0, 0);
+            this.raceChart.Name = "raceChart";
+            this.raceChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            series1.LabelBackColor = System.Drawing.Color.White;
+            series1.Legend = "Legend1";
+            series1.Name = "Selection Sort";
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            series2.Legend = "Legend1";
+            series2.Name = "Insertion Sort";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            series3.Legend = "Legend1";
+            series3.Name = "Quicksort";
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            series4.Legend = "Legend1";
+            series4.Name = "3-way Quicksort";
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            series5.Legend = "Legend1";
+            series5.Name = "Optimized Quicksort";
+            this.raceChart.Series.Add(series1);
+            this.raceChart.Series.Add(series2);
+            this.raceChart.Series.Add(series3);
+            this.raceChart.Series.Add(series4);
+            this.raceChart.Series.Add(series5);
+            this.raceChart.Size = new System.Drawing.Size(795, 387);
+            this.raceChart.TabIndex = 0;
+            this.raceChart.Text = "Race Chart";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            title1.Name = "Title1";
+            title1.Text = "Array count race chart";
+            this.raceChart.Titles.Add(title1);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 526);
-            this.Controls.Add(this.statusLogBox);
+            this.ClientSize = new System.Drawing.Size(827, 590);
+            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.arrayCountRaceButton);
+            this.Controls.Add(this.runSpeedButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.optimizedQSSwitchAt);
             this.Controls.Add(this.optimizedQSCheckbox);
@@ -282,7 +404,6 @@
             this.Controls.Add(this.quicksortCheckBox);
             this.Controls.Add(this.insertionCheckBox);
             this.Controls.Add(this.selectionCheckBox);
-            this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.sortRuns);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.sortButton);
@@ -293,11 +414,16 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Specalg-Sort";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.elemCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.maxVal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sortRuns)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.optimizedQSSwitchAt)).EndInit();
+            this.tabControl.ResumeLayout(false);
+            this.logPage.ResumeLayout(false);
+            this.chartPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.raceChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,7 +438,6 @@
         private System.Windows.Forms.Button sortButton;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown sortRuns;
-        private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.CheckBox selectionCheckBox;
         private System.Windows.Forms.CheckBox insertionCheckBox;
         private System.Windows.Forms.CheckBox quicksortCheckBox;
@@ -321,5 +446,11 @@
         private System.Windows.Forms.NumericUpDown optimizedQSSwitchAt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox statusLogBox;
+        private System.Windows.Forms.Button runSpeedButton;
+        private System.Windows.Forms.Button arrayCountRaceButton;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage logPage;
+        private System.Windows.Forms.TabPage chartPage;
+        private System.Windows.Forms.DataVisualization.Charting.Chart raceChart;
     }
 }
