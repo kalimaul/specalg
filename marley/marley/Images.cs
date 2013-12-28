@@ -115,7 +115,7 @@ namespace marley
 
         public static Bitmap ResizeAndCut(Bitmap sourceBMP, int width, int height)
         {
-#if false
+#if true
             float targetRatio = (float)width / height;
             int targetWidth;
             int targetHeight;
@@ -130,6 +130,11 @@ namespace marley
                 targetHeight = sourceBMP.Height;
                 targetWidth = (int)(targetHeight * targetRatio);
             }
+
+            targetHeight = Math.Min(targetHeight, sourceBMP.Height);
+            targetHeight = Math.Max(targetHeight, 1);
+            targetWidth = Math.Min(targetWidth, sourceBMP.Width);
+            targetWidth = Math.Max(targetWidth, 1);
 
             using (Bitmap cropped = CropArea(sourceBMP, (sourceBMP.Width - targetWidth) / 2, (sourceBMP.Height - targetHeight) / 2, targetWidth, targetHeight))
             {
