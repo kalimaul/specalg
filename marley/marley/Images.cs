@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using BitmapProcessing;
 
 namespace marley
 {
@@ -20,10 +21,12 @@ namespace marley
         {
             foreach (string imgPath in Directory.EnumerateFiles(dir))
             {
+#if false
                 if (handler != null)
                 {
                     handler("Loading " + imgPath);
                 }
+#endif
 
                 try
                 {
@@ -88,7 +91,7 @@ namespace marley
                                 {
                                     using (Bitmap nearestBmp = Bitmap.FromFile(nearest) as Bitmap)
                                     {
-                                        using (Bitmap nearestResized = ResizeBitmap(nearestBmp, width, height))
+                                        using (Bitmap nearestResized = ResizeAndCut(nearestBmp, width, height))
                                         {
                                             DrawOver(bmp, nearestResized, startX, startY);
                                             if (handler != null)
@@ -105,22 +108,67 @@ namespace marley
             }
         }
 
-        public static Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
+        public static Bitmap Resize(Bitmap sourceBMP, int width, int height)
         {
             return new Bitmap(sourceBMP, new Size(width, height));
         }
 
-        public static Bitmap CropArea(Bitmap original, int posX, int posY, int width, int height)
+        public static Bitmap ResizeAndCut(Bitmap sourceBMP, int width, int height)
+        {
+#if false
+            float targetRatio = (float)width / height;
+            int targetWidth;
+            int targetHeight;
+
+            if (width > height)
+            {
+                targetWidth = sourceBMP.Width;
+                targetHeight = (int)(targetWidth / targetRatio);
+            }
+            else
+            {
+                targetHeight = sourceBMP.Height;
+                targetWidth = (int)(targetHeight * targetRatio);
+            }
+
+            using (Bitmap cropped = CropArea(sourceBMP, (sourceBMP.Width - targetWidth) / 2, (sourceBMP.Height - targetHeight) / 2, targetWidth, targetHeight))
+            {
+                return new Bitmap(cropped, new Size(width, height));
+            }
+#else
+            return Resize(sourceBMP, width, height);
+#endif
+        }
+
+        unsafe public static Bitmap CropArea(Bitmap original, int posX, int posY, int width, int height)
         {
             Bitmap ret = new Bitmap(width, height);
+#if false
+            FastBitmap retFast = new FastBitmap(ret);
+            FastBitmap origFast = new FastBitmap(original);
+
+            retFast.LockImage();
+            origFast.LockImage();
 
             for (int x = posX; x < posX + width && x < original.Width; ++x)
             {
                 for (int y = posY; y < posY + height && y < original.Height; ++y)
                 {
-                    ret.SetPixel(x - posX, y - posY, original.GetPixel(x, y));
+                    retFast.CopyFrom(x - posX, y - posY, origFast.GetPixelData(x, y));
                 }
             }
+
+            retFast.UnlockImage();
+            origFast.UnlockImage();
+#else
+            using (Graphics g = Graphics.FromImage(ret))
+            {
+                RectangleF source = new RectangleF(posX, posY, width, height);
+                RectangleF target = new RectangleF(0, 0, width, height);
+                g.DrawImage(original, target, source, GraphicsUnit.Pixel);
+            }
+#endif
+
             return ret;
         }
 
@@ -132,25 +180,30 @@ namespace marley
             }
         }
 
-        public static Color AverageColor(Bitmap img)
+        unsafe public static Color AverageColor(Bitmap img)
         {
+#if true
             if (img.Width > avgColorPxSize && img.Height > avgColorPxSize)
             {
-                img = ResizeBitmap(img, avgColorPxSize, avgColorPxSize);
+                img = Resize(img, avgColorPxSize, avgColorPxSize);
             }
+#endif
 
             double r = 0, g = 0, b = 0;
 
-            for (int x = 0; x < img.Width; ++x)
+            FastBitmap fast = new FastBitmap(img);
+            fast.LockImage();
+            FastBitmap.PixelData* px = fast.GetPixelData(0, 0);
+
+            for (int i = 0; i < img.Width * img.Height; ++i)
             {
-                for (int y = 0; y < img.Height; ++y)
-                {
-                    Color px = img.GetPixel(x, y);
-                    r += px.R;
-                    g += px.G;
-                    b += px.B;
-                }
+                r += px->red;
+                g += px->green;
+                b += px->blue;
+                ++px;
             }
+
+            fast.UnlockImage();
 
             r /= (img.Width * img.Height);
             g /= (img.Width * img.Height);
