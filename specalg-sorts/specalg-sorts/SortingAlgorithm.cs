@@ -48,11 +48,6 @@ namespace specalg_sorts
 
         protected abstract void DoSort(int[] array, Result res);
 
-        public Result RunOnce()
-        {
-            return Run(1);
-        }
-
         public Result Run(int count)
         {
             Result avg = new Result();

@@ -108,6 +108,8 @@ namespace specalg_sorts
                             statusLogBox.Refresh();
                         }));
 
+                        Thread.Sleep(10);
+
                         SortingAlgorithm.Result res = sort.SetArray(array).Run(runs);
                         res.Divide(array.Length);
 
@@ -116,6 +118,8 @@ namespace specalg_sorts
                             statusLogBox.AppendText(sort.GetType().Name + ": " + res.ToString() + "\n");
                             statusLogBox.Refresh();
                         }));
+
+                        Thread.Sleep(10);
                     }
 
                     statusLogBox.BeginInvoke(new MethodInvoker(delegate
