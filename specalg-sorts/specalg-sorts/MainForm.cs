@@ -162,13 +162,13 @@ namespace specalg_sorts
             const int runCount = 10000;
             const int qsWinRequirement = 10;
 
-            int arrayCount = 0;
+            int arrayCount = 1;
 
             string qsname = typeof(QuickSort).Name;
             string rqsname = /*typeof(RandomQSort).Name*/"nonde";
             int quickSortWins = 0;
 
-            while (arrayCount < 50)
+            while (arrayCount <= 50)
             {
                 int[] numbers = new int[arrayCount];
                 Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
@@ -186,6 +186,8 @@ namespace specalg_sorts
                     this.raceChart.Series["Quicksort"].Points.AddXY(arrayCount.ToString(), results.Keys.ElementAt(1).elapsedTime);
                     this.raceChart.ResetAutoValues();
                 }));
+
+                Thread.Sleep(10);
 
                 List<SortingAlgorithm.Result> resList = new List<SortingAlgorithm.Result>(results.Keys);
                 resList.Sort((t1, t2) => (t1.accessCount.CompareTo(t2.accessCount)));
@@ -215,6 +217,8 @@ namespace specalg_sorts
                     this.Refresh();
                 }));
 
+                Thread.Sleep(10);
+
                 if (qsWinRequirement <= quickSortWins)
                 {
                     this.statusLogBox.BeginInvoke(new MethodInvoker(delegate
@@ -222,6 +226,8 @@ namespace specalg_sorts
                         this.statusLogBox.AppendText("QuickSort Won!!\n");
                         this.Refresh();
                     }));
+
+                    Thread.Sleep(10);
                     //break;
                 }
 
@@ -233,9 +239,9 @@ namespace specalg_sorts
         {
             const int runCount = 10000;
 
-            int arrayCount = 0;
+            int arrayCount = 1;
 
-            while (arrayCount < 100)
+            while (arrayCount <= 100)
             {
                 int[] numbers = new int[arrayCount];
                 Helpers.FillArrayWithRandomData(numbers, int.MaxValue);
@@ -257,6 +263,8 @@ namespace specalg_sorts
                     this.allRaceChart.ResetAutoValues();
                 }));
 
+                Thread.Sleep(10);
+
                 List<SortingAlgorithm.Result> resList = new List<SortingAlgorithm.Result>(results.Keys);
                 resList.Sort((t1, t2) => (t1.accessCount.CompareTo(t2.accessCount)));
                 string accessCountWinner = results[resList[0]];
@@ -275,6 +283,8 @@ namespace specalg_sorts
                     this.statusLogBox.AppendText(String.Format("S: {0, -8} Acc: {1, -25} It: {2, -25} Wr: {3, -25} El: {4, -25}\n", arrayCount.ToString(), accessCountWinner, iterationWinner, writeWinner, elapsedWinner));
                     this.Refresh();
                 }));
+
+                Thread.Sleep(10);
 
                 arrayCount++;
             }
