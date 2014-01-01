@@ -60,6 +60,7 @@
             this.logBox.Size = new System.Drawing.Size(732, 258);
             this.logBox.TabIndex = 2;
             this.logBox.Text = "";
+            this.logBox.BackColor = System.Drawing.SystemColors.Window;
             // 
             // imgLoadButton
             // 
